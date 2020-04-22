@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:async';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -58,6 +57,7 @@ class _HomePageState extends State<HomePage> {
                 FutureBuilder(
                   future: _bookDetails(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
+
                     if (snapshot.data != null) {
                       return Container(
                         height: MediaQuery.of(context).size.height,
@@ -65,16 +65,37 @@ class _HomePageState extends State<HomePage> {
                           itemCount: snapshot.data.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Center(
-                              child: Container(
-                                child: Text(
-                                  snapshot.data[index].bookname,
-                                ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Card(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        Text(
+                                            snapshot.data[index].bookname,
+                                          ),
+                                        RawMaterialButton(
+                                            child: Icon(
+                                         Icons.check,
+                                         color: Colors.green,
+                                            ),
+                                            onPressed: () {
+                                         print('id: $index');
+                                            },
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             );
                           },
                         ),
                       );
+
                     } else {
+
                       return Center(
                         child: Container(
                           child: Text(
@@ -82,6 +103,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       );
+
                     }
                   },
                 ),
